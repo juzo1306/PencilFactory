@@ -1,0 +1,116 @@
+// Copyright (c) 2026, Phoenix Contact GmbH & Co. KG
+// Licensed under the Apache License, Version 2.0
+
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.Serialization;
+using System.Threading;
+using System.Threading.Tasks;
+using Moryx.AbstractionLayer.Activities;
+using Moryx.AbstractionLayer.Drivers.InOut;
+using Moryx.AbstractionLayer.Resources;
+using Moryx.ControlSystem.Activities;
+using Moryx.ControlSystem.Cells;
+using Moryx.Serialization;
+using Moryx.StateMachines;
+using Moryx.VisualInstructions;
+using PencilFactory.Activities.AssemblingStep;
+using PencilFactory.Capabilities;
+
+namespace PencilFactory.Resources.Assembling;
+
+[ResourceRegistration] // Only necessary for dependency injection like logging or parallel operations
+public class AssemblingCell : Cell, IAsyncStateContext
+{
+    private Session _currentSession;
+    private long _currentInstruction;
+
+    [ResourceReference(ResourceRelationType.Driver)]
+    public IInOutDriver Driver { get; set; }
+
+    [ResourceReference(ResourceRelationType.Extension)]
+    public IVisualInstructor VisualInstructor { get; set; }
+
+    [DataMember, EntrySerialize]
+    [Description("Configured value for the capabilities")]
+    public int Value { get; set; }
+
+    protected override async Task OnInitializeAsync(CancellationToken cancellationToken)
+    {
+        await base.OnInitializeAsync(cancellationToken);
+        Capabilities = new AssemblingCapabilities { Value = Value };
+
+        if (Driver != null)
+        {
+            Driver.Input.InputChanged += OnInputChanged;
+        }
+    }
+
+    protected override async Task OnStartAsync(CancellationToken cancellationToken)
+    {
+        await base.OnStartAsync(cancellationToken);
+    }
+
+    protected override async Task OnStopAsync(CancellationToken cancellationToken)
+    {
+        await base.OnStopAsync(cancellationToken);
+    }
+
+    protected override IEnumerable<Session> ProcessEngineAttached()
+    {
+        yield break;
+    }
+
+    protected override IEnumerable<Session> ProcessEngineDetached()
+    {
+        yield break;
+    }
+
+    public override void StartActivity(ActivityStart activityStart)
+    {
+        /* Start execution here */
+    }
+
+    public override void ProcessAborting(Activity affectedActivity)
+    {
+        // Default behavior: Clear instruction and abort execution
+        if (_currentSession is ActivityStart activityStart)
+        {
+            // Clear driver and/or instructor
+            VisualInstructor?.Clear(_currentInstruction);
+            if (Driver != null)
+            {
+                Driver.Output["Start"] = false;
+            }
+
+            // Report current activity as failed
+            activityStart.CreateResult((int)AssemblingActivityResults.Failed);
+        }
+    }
+
+    public override void SequenceCompleted(SequenceCompleted completed)
+    {
+    }
+
+    private void OnInputChanged(object sender, InputChangedEventArgs args)
+    {
+        if (args.Key == "Ready" /* Driver indicates ready */)
+        {
+            var rtw = Session.StartSession(ActivityClassification.Production, ReadyToWorkType.Pull);
+            _currentSession = rtw;
+            PublishReadyToWork(rtw);
+        }
+        else if (args.Key == "Completed" && _currentSession is ActivityStart activitySession)
+        {
+            var result = activitySession.CreateResult(0);
+            _currentSession = result;
+            PublishActivityCompleted(result);
+        }
+    }
+
+    Task IAsyncStateContext.SetStateAsync(StateBase state, CancellationToken cancellationToken)
+    {
+        /* Use for a resource state machine */
+        throw new System.NotImplementedException();
+    }
+}
