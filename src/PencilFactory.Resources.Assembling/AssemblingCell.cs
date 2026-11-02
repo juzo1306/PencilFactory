@@ -1,6 +1,7 @@
 // Copyright (c) 2026, Phoenix Contact GmbH & Co. KG
 // Licensed under the Apache License, Version 2.0
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.Serialization;
@@ -11,6 +12,7 @@ using Moryx.AbstractionLayer.Drivers.InOut;
 using Moryx.AbstractionLayer.Resources;
 using Moryx.ControlSystem.Activities;
 using Moryx.ControlSystem.Cells;
+using Moryx.ControlSystem.VisualInstructions;
 using Moryx.Serialization;
 using Moryx.StateMachines;
 using Moryx.VisualInstructions;
@@ -58,7 +60,7 @@ public class AssemblingCell : Cell, IAsyncStateContext
 
     protected override IEnumerable<Session> ProcessEngineAttached()
     {
-        yield break;
+        yield return Session.StartSession(ActivityClassification.Production, ReadyToWorkType.Push);
     }
 
     protected override IEnumerable<Session> ProcessEngineDetached()
@@ -68,7 +70,21 @@ public class AssemblingCell : Cell, IAsyncStateContext
 
     public override void StartActivity(ActivityStart activityStart)
     {
-        /* Start execution here */
+        _currentSession = activityStart;
+        switch (activityStart.Activity)
+        {
+            case AssemblingActivity activity:
+                _currentInstruction = VisualInstructor.Execute(Name, activityStart, InstructionCompleted);
+                break;
+        }
+    }
+
+    private void InstructionCompleted(int instructionResult, ActivityStart activity)
+    {
+        _currentInstruction = 0;
+        var result = activity.CreateResult(instructionResult);
+        _currentSession = result;
+        PublishActivityCompleted(result);
     }
 
     public override void ProcessAborting(Activity affectedActivity)
@@ -90,6 +106,11 @@ public class AssemblingCell : Cell, IAsyncStateContext
 
     public override void SequenceCompleted(SequenceCompleted completed)
     {
+        _currentSession = completed;
+
+        var rtw = Session.StartSession(ActivityClassification.Production, ReadyToWorkType.Push);
+        PublishReadyToWork(rtw);
+        _currentSession = rtw;
     }
 
     private void OnInputChanged(object sender, InputChangedEventArgs args)

@@ -17,8 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\PencilFactory.Resources.Colorizing\PencilFactory.Resources.Colorizing.csproj" />
     <ProjectReference Include="..\..\PencilFactory.Resources\PencilFactory.Resources.csproj" />
     <ProjectReference Include="..\..\PencilFactory.Resources.Assembling\PencilFactory.Resources.Assembling.csproj" />
+    <ProjectReference Include="..\..\PencilFactory.Resources.Testing\PencilFactory.Resources.Testing.csproj" />
   </ItemGroup>
 
 </Project>

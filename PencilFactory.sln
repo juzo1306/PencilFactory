@@ -1,7 +1,6 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.3.32901.215
+# Visual Studio Version 18
+VisualStudioVersion = 18.11.12306.390
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PencilFactory.App", "src\PencilFactory.App\PencilFactory.App.csproj", "{8F6449AB-4560-40B1-835E-308F1534734C}"
 EndProject
@@ -29,7 +28,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7237C0EF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PencilFactory.Tests", "src\Tests\PencilFactory.Tests\PencilFactory.Tests.csproj", "{E2B04E94-41F7-48AB-B142-40D399FDFEE4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PencilFactory.Resources.Assembling", "src\PencilFactory.Resources.Assembling\PencilFactory.Resources.Assembling.csproj", "{{B4AD432C-9F00-4E67-9CE2-9B7E8C097F93}}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PencilFactory.Resources.Assembling", "src\PencilFactory.Resources.Assembling\PencilFactory.Resources.Assembling.csproj", "{3D824E96-2F9B-472B-9D6B-188FD1118AD3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PencilFactory.Resources.Colorizing", "src\PencilFactory.Resources.Colorizing\PencilFactory.Resources.Colorizing.csproj", "{771EADC6-FA63-2EE5-2392-64AA3D1C0C58}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PencilFactory.Resources.Testing", "src\PencilFactory.Resources.Testing\PencilFactory.Resources.Testing.csproj", "{89B5A640-5244-4349-BF02-D4D8F0FF9885}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +68,18 @@ Global
 		{E2B04E94-41F7-48AB-B142-40D399FDFEE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2B04E94-41F7-48AB-B142-40D399FDFEE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2B04E94-41F7-48AB-B142-40D399FDFEE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D824E96-2F9B-472B-9D6B-188FD1118AD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D824E96-2F9B-472B-9D6B-188FD1118AD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D824E96-2F9B-472B-9D6B-188FD1118AD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D824E96-2F9B-472B-9D6B-188FD1118AD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{771EADC6-FA63-2EE5-2392-64AA3D1C0C58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{771EADC6-FA63-2EE5-2392-64AA3D1C0C58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{771EADC6-FA63-2EE5-2392-64AA3D1C0C58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{771EADC6-FA63-2EE5-2392-64AA3D1C0C58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89B5A640-5244-4349-BF02-D4D8F0FF9885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89B5A640-5244-4349-BF02-D4D8F0FF9885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89B5A640-5244-4349-BF02-D4D8F0FF9885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89B5A640-5244-4349-BF02-D4D8F0FF9885}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

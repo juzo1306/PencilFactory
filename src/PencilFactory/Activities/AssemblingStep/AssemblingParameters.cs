@@ -11,5 +11,6 @@ public class AssemblingParameters : VisualInstructionParameters
 {
     protected override void Populate(Process process, Parameters instance)
     {
+        base.Populate(process, instance);
     }
 }

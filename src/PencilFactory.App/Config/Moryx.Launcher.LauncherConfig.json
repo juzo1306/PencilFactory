@@ -1,5 +1,11 @@
 {
   "ModuleSortIndices": [],
   "ExternalModules": [],
+  "Regions": [
+    {
+      "Region": "Top",
+      "Name": "NotificationsBar"
+    }
+  ],
   "ConfigState": "Valid"
 }
