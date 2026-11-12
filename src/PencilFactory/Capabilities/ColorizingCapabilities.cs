@@ -8,22 +8,25 @@ namespace PencilFactory.Capabilities;
 
 public class ColorizingCapabilities : CapabilitiesBase
 {
-    public PencilColor Color { get; set; }
-    public int Value { get; set; }
+    /// <summary>
+    /// Required color for production matching.
+    /// Null means "any colorizing cell" (used by setup / color change).
+    /// </summary>
+    public PencilColor? Color { get; set; }
 
     protected override bool ProvidedBy(ICapabilities provided)
     {
-        var providedColorizing = provided as ColorizingCapabilities;
-        if (providedColorizing == null)
+        if (provided is not ColorizingCapabilities providedColorizing)
         {
             return false;
         }
 
-        if (providedColorizing.Value < Value && providedColorizing.Color != Color) // Provided must be greater or equal
+        // Setup: no specific color required -> any colorizing cell matches
+        if (Color == null)
         {
-            return false;
+            return true;
         }
-        return true;
 
+        return providedColorizing.Color == Color;
     }
 }

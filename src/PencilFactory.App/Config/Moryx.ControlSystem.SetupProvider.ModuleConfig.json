@@ -1,0 +1,18 @@
+{
+  "SetupTriggers": [
+    {
+      "$type": "PencilFactory.ControlSystem.SetupTriggers.ProvideColorConfig, PencilFactory.ControlSystem",
+      "PluginName": "ProvideColorTrigger",
+      "SortOrder": 0,
+      "Disabled": false
+    },
+    {
+      "$type": "PencilFactory.ControlSystem.SetupTriggers.ResetColorAfterProductionConfig, PencilFactory.ControlSystem",
+      "PluginName": "ResetColorAfterProductionTrigger",
+      "DefaultColor": "Green",
+      "SortOrder": 0,
+      "Disabled": false
+    }
+  ],
+  "ConfigState": "Generated"
+}

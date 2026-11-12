@@ -4,11 +4,14 @@
 using Moryx.AbstractionLayer.Activities;
 using Moryx.ControlSystem.Simulation;
 using Moryx.Drivers.Simulation.InOutDriver;
+using Moryx.Serialization;
 
 namespace PencilFactory.Resources.Assembling;
 
 public class AssemblingSimulatedInOutDriver : SimulatedInOutDriver
 {
+    [EntrySerialize]
+    internal AssemblingStateBase State { get; private set; }
     public override void Ready(Activity activity)
     {
         SimulatedState = SimulationState.Requested;

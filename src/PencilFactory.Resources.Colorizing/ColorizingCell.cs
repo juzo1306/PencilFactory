@@ -11,9 +11,11 @@ using Moryx.AbstractionLayer.Drivers.InOut;
 using Moryx.AbstractionLayer.Resources;
 using Moryx.ControlSystem.Activities;
 using Moryx.ControlSystem.Cells;
+using Moryx.ControlSystem.VisualInstructions;
 using Moryx.Serialization;
 using Moryx.StateMachines;
 using Moryx.VisualInstructions;
+using PencilFactory.Activities.ColorChangeStep;
 using PencilFactory.Activities.ColorizingStep;
 using PencilFactory.Capabilities;
 using PencilFactory.Products;
@@ -70,7 +72,7 @@ public class ColorizingCell : Cell, IAsyncStateContext
     protected override async Task OnInitializeAsync(CancellationToken cancellationToken)
     {
         await base.OnInitializeAsync(cancellationToken);
-        Capabilities = new ColorizingCapabilities { Value = Value };
+        Capabilities = new ColorizingCapabilities { Color = (PencilColor)Value };
 
         if (Driver != null)
         {
@@ -90,6 +92,8 @@ public class ColorizingCell : Cell, IAsyncStateContext
 
     protected override IEnumerable<Session> ProcessEngineAttached()
     {
+        // yield return Session.StartSession(ActivityClassification.Production, ReadyToWorkType.Push);
+        yield return Session.StartSession(ActivityClassification.Setup, ReadyToWorkType.Push);
         yield return Session.StartSession(ActivityClassification.Production, ReadyToWorkType.Push);
     }
 
@@ -103,10 +107,28 @@ public class ColorizingCell : Cell, IAsyncStateContext
         _currentSession = activityStart;
         switch (activityStart.Activity)
         {
-            case ColorizingActivity:
-                Driver.Output[ProcessStart] = true;
+            //case ColorizingActivity:
+            //    Driver.Output[ProcessStart] = true;
+            //    break;
+            case ColorChangeActivity:
+                _currentInstruction = VisualInstructor.Execute(Name, activityStart, ColorChangeCompleted);
                 break;
         }
+    }
+
+    private void ColorChangeCompleted(int instructionResult, ActivityStart activity)
+    {
+        // Only Success changes the cell color. Failed / TechnicalError keep the old color
+        if (instructionResult == (int)ColorChangeActivityResults.Success)
+        {
+            var colorChange = (ColorChangeActivity)activity.Activity;
+            Color = colorChange.Parameters.Color;
+        }
+
+        _currentInstruction = 0;
+        var result = activity.CreateResult(instructionResult);
+        _currentSession = result;
+        PublishActivityCompleted(result);
     }
 
     public override void ProcessAborting(Activity affectedActivity)
@@ -125,7 +147,22 @@ public class ColorizingCell : Cell, IAsyncStateContext
 
     public override void SequenceCompleted(SequenceCompleted completed)
     {
+        //_currentSession = completed;
+
+        //var rtw = Session.StartSession(ActivityClassification.Production, ReadyToWorkType.Push);
+        //PublishReadyToWork(rtw);
+        //_currentSession = rtw;
+        //--------------
+
         _currentSession = completed;
+
+        if (completed.AcceptedClassification == ActivityClassification.Setup)
+        {
+            var setupRtw = Session.StartSession(ActivityClassification.Setup, ReadyToWorkType.Push);
+            PublishReadyToWork(setupRtw);
+            _currentSession = setupRtw;
+            return;
+        }
 
         var rtw = Session.StartSession(ActivityClassification.Production, ReadyToWorkType.Push);
         PublishReadyToWork(rtw);

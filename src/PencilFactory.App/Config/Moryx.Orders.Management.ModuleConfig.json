@@ -1,0 +1,41 @@
+{
+  "CountStrategy": "DoNotReplaceScrap",
+  "ProductAssignment": {
+    "PluginName": "DefaultProductAssignment"
+  },
+  "PartsAssignment": {
+    "PluginName": "NullPartsAssignment"
+  },
+  "RecipeAssignment": {
+    "PluginName": "DefaultRecipeAssignment"
+  },
+  "OperationValidation": {
+    "$type": "Moryx.Orders.Management.Assignment.RegexOperationValidationConfig, Moryx.Orders.Management",
+    "PluginName": "RegexOperationValidation",
+    "RegularExpression": "^[\\S+]{4}$"
+  },
+  "OperationDispatcher": {
+    "PluginName": "SingleJobOperationDispatcher"
+  },
+  "Documents": {
+    "DocumentsPath": "./Backups/Orders",
+    "DocumentLoader": {
+      "PluginName": "NullDocumentLoader"
+    }
+  },
+  "Users": {
+    "UserRequired": false,
+    "IgnoreUserStatus": false
+  },
+  "Advice": {
+    "AdviceExecutor": {
+      "PluginName": "NullAdviceExecutor"
+    },
+    "UseAdviceExecutorForOrderAdvice": false
+  },
+  "MaxRunningOperations": 3,
+  "Notifications": {
+    "EnableAmountReachedNotification": false
+  },
+  "ConfigState": "Generated"
+}
