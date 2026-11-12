@@ -12,6 +12,26 @@
       "JsonColumn": "Text8",
       "PropertyConfigs": [],
       "TargetType": "PencilFactory.Products.GraphitePencilType"
+    },
+    {
+      "$type": "Moryx.Products.Management.GenericTypeConfiguration, Moryx.Products.Management",
+      "PluginName": "GenericTypeStrategy",
+      "JsonColumn": "Text8",
+      "PropertyConfigs": [
+        {
+          "PropertyName": "Color",
+          "PluginName": "IntegerColumnMapper",
+          "Column": "Integer1"
+        }
+      ],
+      "TargetType": "PencilFactory.Products.PencilCartonType"
+    },
+    {
+      "$type": "Moryx.Products.Management.GenericTypeConfiguration, Moryx.Products.Management",
+      "PluginName": "GenericTypeStrategy",
+      "JsonColumn": "Text8",
+      "PropertyConfigs": [],
+      "TargetType": "PencilFactory.Products.PencilPackType"
     }
   ],
   "InstanceStrategies": [
@@ -20,7 +40,29 @@
       "PluginName": "SkipInstancesStrategy"
     }
   ],
-  "LinkStrategies": [],
+  "LinkStrategies": [
+    {
+      "$type": "Moryx.Products.Management.GenericLinkConfiguration, Moryx.Products.Management",
+      "PluginName": "GenericLinkStrategy",
+      "JsonColumn": "Text8",
+      "PropertyConfigs": [
+        {
+          "PropertyName": "Quantity",
+          "PluginName": "IntegerColumnMapper",
+          "Column": "Integer1"
+        }
+      ],
+      "TargetType": "PencilFactory.Products.PencilPackType",
+      "PartName": "GraphitePencil",
+      "PartCreation": "FromPartLink"
+    },
+    {
+      "TargetType": "PencilFactory.Products.PencilPackType",
+      "PartName": "Carton",
+      "PluginName": "SimpleLinkStrategy",
+      "PartCreation": "FromPartLink"
+    }
+  ],
   "RecipeStrategies": [
     {
       "$type": "Moryx.Products.Management.GenericRecipeConfiguration, Moryx.Products.Management",
