@@ -7,4 +7,5 @@ public enum PencilColor
 {
     Green = 1,
     Brown = 2,
+    Blue = 3
 }

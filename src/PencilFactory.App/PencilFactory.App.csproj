@@ -80,6 +80,11 @@
     <PackageReference Include="Moryx.ProcessData.Adapter.ResourceManagement" />
     <PackageReference Include="Moryx.ProcessData.Adapter.NotificationPublisher" />
     <PackageReference Include="Moryx.ProcessData.Endpoints" />
+
+    <!-- MORYX FactoryMonitor -->
+    <PackageReference Include="Moryx.Factory" />
+    <PackageReference Include="Moryx.FactoryMonitor.Endpoints" />
+    <PackageReference Include="Moryx.FactoryMonitor.Web" /> 
   </ItemGroup>
 
   <ItemGroup>

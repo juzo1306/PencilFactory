@@ -107,6 +107,11 @@
     <PackageVersion Include="Moryx.ProcessData.Adapter.NotificationPublisher" Version="$(MoryxVersion)" />
     <PackageVersion Include="Moryx.ProcessData.Endpoints" Version="$(MoryxVersion)" />
     <PackageVersion Include="Moryx.ProcessData.Web" Version="$(MoryxVersion)" />
+
+    <!-- MORYX FactoryMonitor -->
+    <PackageVersion Include="Moryx.Factory" Version="$(MoryxVersion)" />
+    <PackageVersion Include="Moryx.FactoryMonitor.Endpoints" Version="$(MoryxVersion)" />
+    <PackageVersion Include="Moryx.FactoryMonitor.Web" Version="$(MoryxVersion)" />  
   </ItemGroup>
 
 </Project>

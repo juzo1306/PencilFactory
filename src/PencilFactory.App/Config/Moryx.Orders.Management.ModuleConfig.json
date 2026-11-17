@@ -33,7 +33,7 @@
     },
     "UseAdviceExecutorForOrderAdvice": false
   },
-  "MaxRunningOperations": 3,
+  "MaxRunningOperations": 5,
   "Notifications": {
     "EnableAmountReachedNotification": false
   },
