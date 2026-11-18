@@ -97,6 +97,8 @@
     <ProjectReference Include="..\PencilFactory.Resources.Assembling\PencilFactory.Resources.Assembling.csproj" />
     <ProjectReference Include="..\PencilFactory.Resources.Testing\PencilFactory.Resources.Testing.csproj" />
     <ProjectReference Include="..\PencilFactory.Resources.Packing\PencilFactory.Resources.Packing.csproj" />
+    <ProjectReference Include="..\PencilFactory.ProductionBridge\PencilFactory.ProductionBridge.csproj" />
+    <ProjectReference Include="..\PencilFactory.ErpMock\PencilFactory.ErpMock.csproj" />
   </ItemGroup>
 
   <ItemGroup>
